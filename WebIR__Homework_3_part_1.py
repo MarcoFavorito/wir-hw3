@@ -99,8 +99,8 @@ def main():
 	# The grid search always select stop_words=None. See after in "parameters".
 
 	## classifier
-	nbc = MultinomialNB()
-	# knn = neighbors.KNeighborsClassifier()
+	# nbc = MultinomialNB()
+	nbc = neighbors.KNeighborsClassifier()
 
 
 	## With a Pipeline object we can assemble several steps
@@ -121,7 +121,9 @@ def main():
 		'vect__stop_words': [None, en_stopwords], # added by @Marco
 		'vect__max_df': [1.0, 0.8], # added by @Marco
 		'vect__ngram_range': [(1, 1), (1, 2),],
-		'nbc__alpha': [.001,.01, 1.0, 10.],
+		# 'nbc__alpha': [.001,.01, 1.0, 10.],
+		'nbc__n_neighbors' : range(1,10),
+		'nbc__weights': ['uniform', 'distance'],
 		}
 
 
@@ -129,7 +131,7 @@ def main():
 	## to find in an automated fashion the best combination of parameters.
 	grid_search = GridSearchCV(pipeline,
 							   parameters,
-							   scoring=metrics.make_scorer(metrics.average_precision_score, average='weighted'),
+							   scoring=metrics.make_scorer(metrics.matthews_corrcoef),
 							   cv=conf.GRID_SEARCH_CV_PARAMS["cv"],
 							   n_jobs=conf.GRID_SEARCH_CV_PARAMS["n_jobs"],
 							   verbose=10)
