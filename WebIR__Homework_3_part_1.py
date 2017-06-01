@@ -118,12 +118,15 @@ def main():
 	##  Values are set of values to try for a particular parameter.
 	parameters = {
 		'vect__tokenizer': [None, stemming_tokenizer],
-		'vect__stop_words': [None, en_stopwords], # added by @Marco
-		'vect__max_df': [1.0, 0.8], # added by @Marco
-		'vect__ngram_range': [(1, 1), (1, 2),],
+		# 'vect__stop_words': [None, en_stopwords], # added by @Marco
+		# 'vect__max_df': [1.0, 0.9, 0.8], # added by @Marco
+		# 'vect__min_df': [0.0, 0.005, 0.01],
+		'vect__ngram_range': [(1, 1), (1, 2)],
+		# 'vect__smooth_idf': [True, False],1
 		# 'nbc__alpha': [.001,.01, 1.0, 10.],
 		'nbc__n_neighbors' : range(1,10),
-		'nbc__weights': ['uniform', 'distance'],
+		# 'nbc__weights': ['uniform', 'distance'],
+		# 'nbc__metric': ['minkowski', 'euclidean'],
 		}
 
 
@@ -189,6 +192,12 @@ def main():
 	debug_print("Confusion Matrix: True-Classes X Predicted-Classes")
 	debug_print(confusion_matrix)
 	debug_print()
+
+	debug_print("metrics.accuracy_score")
+	debug_print(metrics.accuracy_score(Y_test, Y_predicted))
+
+	debug_print("Matthews corr. coeff")
+	debug_print(metrics.matthews_corrcoef(Y_test, Y_predicted))
 
 if __name__ == '__main__':
 	main()
