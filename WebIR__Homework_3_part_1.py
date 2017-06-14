@@ -91,7 +91,7 @@ def main():
 	# ----------------------------------------
 
 	# Fazzone's version:
-	vectorizer = TfidfVectorizer(strip_accents= None, preprocessor = None)
+	vectorizer = TfidfVectorizer(strip_accents=None, preprocessor=None)
 
 	# for Multinomial Naive Bayes, it seems to perform worse than Fazzone...
 	# with stopwords:	avg / total       0.90      0.90      0.90       105
@@ -100,7 +100,7 @@ def main():
 
 	## classifier
 	# nbc = MultinomialNB()
-	nbc = neighbors.KNeighborsClassifier()
+	knnc = neighbors.KNeighborsClassifier()
 
 
 	## With a Pipeline object we can assemble several steps
@@ -108,7 +108,7 @@ def main():
 
 	pipeline = Pipeline([
 		('vect', vectorizer),
-		('nbc', nbc),
+		('knnc', knnc),
 		])
 
 
@@ -123,10 +123,10 @@ def main():
 		# 'vect__min_df': [0.0, 0.005, 0.01],
 		'vect__ngram_range': [(1, 1), (1, 2)],
 		# 'vect__smooth_idf': [True, False],1
-		# 'nbc__alpha': [.001,.01, 1.0, 10.],
-		'nbc__n_neighbors' : range(1,10),
-		# 'nbc__weights': ['uniform', 'distance'],
-		# 'nbc__metric': ['minkowski', 'euclidean'],
+		# 'knnc__alpha': [.001,.01, 1.0, 10.],
+		'knnc__n_neighbors' : range(1,10),
+		# 'knnc__weights': ['uniform', 'distance'],
+		# 'knnc__metric': ['minkowski', 'euclidean'],
 		}
 
 
