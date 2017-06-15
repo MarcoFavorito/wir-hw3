@@ -7,6 +7,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from nltk.corpus import stopwords
 from nltk.stem.snowball import EnglishStemmer
+from nltk.stem.porter import PorterStemmer
+from nltk.stem.lancaster import LancasterStemmer
 from nltk import word_tokenize
 
 from sklearn.naive_bayes import MultinomialNB
@@ -28,10 +30,22 @@ from os import system
 
 ############################################
 stemmer = EnglishStemmer()
+porter_stemmer = PorterStemmer()
+lancaster_stemmer = LancasterStemmer()
 
 def stemming_tokenizer(text):
 	stemmed_text = [stemmer.stem(word) for word in word_tokenize(text, language='english')]
 	return stemmed_text
+
+def porter_stemming_tokenizer(text):
+	stemmed_text = [porter_stemmer.stem(word) for word in word_tokenize(text, language='english')]
+	return stemmed_text
+
+def lancaster_stemming_tokenizer(text):
+	stemmed_text = [lancaster_stemmer.stem(word) for word in word_tokenize(text, language='english')]
+	return stemmed_text
+
+
 ######################################################################
 
 
@@ -120,7 +134,7 @@ def main():
 	##  Keys are parameters of objects in the pipeline.
 	##  Values are set of values to try for a particular parameter.
 	parameters = {
-		'vect__tokenizer': [stemming_tokenizer], # [None, stemming_tokenizer],
+		'vect__tokenizer': [stemming_tokenizer, porter_stemming_tokenizer, lancaster_stemming_tokenizer], # [None, stemming_tokenizer],
 		# 'vect__analyzer': ['word', 'char'],
 		# 'vect__analyzer': ['char'],
 		'vect__stop_words': [en_stopwords], # [None, en_stopwords],
@@ -208,6 +222,9 @@ def main():
 
 	debug_print("Matthews corr. coeff")
 	debug_print(metrics.matthews_corrcoef(Y_test, Y_predicted))
+
+	for x,yt,yp in zip(X_test, Y_test, Y_predicted):
+		if yt!=yp: print(yp, yt, x)
 
 # if __name__ == '__main__':
 main()
