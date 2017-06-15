@@ -24,6 +24,8 @@ from utils import debug_print
 import nltk
 from nltk.corpus import stopwords
 
+from os import system
+
 ############################################
 stemmer = EnglishStemmer()
 
@@ -117,16 +119,23 @@ def main():
 	##  Keys are parameters of objects in the pipeline.
 	##  Values are set of values to try for a particular parameter.
 	parameters = {
-		'vect__tokenizer': [None, stemming_tokenizer],
-		# 'vect__stop_words': [None, en_stopwords], # added by @Marco
-		# 'vect__max_df': [1.0, 0.9, 0.8], # added by @Marco
-		# 'vect__min_df': [0.0, 0.005, 0.01],
-		'vect__ngram_range': [(1, 1), (1, 2)],
-		# 'vect__smooth_idf': [True, False],1
-		# 'knnc__alpha': [.001,.01, 1.0, 10.],
-		'knnc__n_neighbors' : range(1,10),
+		'vect__tokenizer': [stemming_tokenizer], # [None, stemming_tokenizer],
+		# 'vect__analyzer': ['word', 'char'],
+		# 'vect__analyzer': ['char'],
+		'vect__stop_words': [en_stopwords], # [None, en_stopwords],
+		'vect__max_df': [0.3],
+		'vect__min_df': [14], # range(10, 20, 2),
+		# 'vect__binary': [True, False],
+		# 'vect__use_idf': [True, False],
+		# 'vect__smooth_idf': [True, False],
+		'vect__sublinear_tf': [True],
+		# 'vect__ngram_range': [(1, x) for x in range(1, 4)],
+		# 'vect__ngram_range': [(3, x) for x in range(3, 10)],
+
+		'knnc__n_neighbors': range(3, 14, 2),
 		# 'knnc__weights': ['uniform', 'distance'],
 		# 'knnc__metric': ['minkowski', 'euclidean'],
+		'knnc__p': [2]
 		}
 
 
@@ -137,7 +146,7 @@ def main():
 							   scoring=metrics.make_scorer(metrics.matthews_corrcoef),
 							   cv=conf.GRID_SEARCH_CV_PARAMS["cv"],
 							   n_jobs=conf.GRID_SEARCH_CV_PARAMS["n_jobs"],
-							   verbose=10)
+							   verbose=conf.VERBOSITY)
 
 	## Start an exhaustive search to find the best combination of parameters
 	## according to the selected scoring-function.
@@ -199,5 +208,6 @@ def main():
 	debug_print("Matthews corr. coeff")
 	debug_print(metrics.matthews_corrcoef(Y_test, Y_predicted))
 
-if __name__ == '__main__':
-	main()
+# if __name__ == '__main__':
+main()
+system('say Fatto')
