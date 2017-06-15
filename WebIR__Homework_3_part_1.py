@@ -129,14 +129,14 @@ def main():
 		# 'vect__binary': [True, False],
 		# 'vect__use_idf': [True, False],
 		# 'vect__smooth_idf': [True, False],
-		'vect__sublinear_tf': [True],
+		'vect__sublinear_tf': [True], # [True, False],
 		# 'vect__ngram_range': [(1, x) for x in range(1, 4)],
 		# 'vect__ngram_range': [(3, x) for x in range(3, 10)],
 
 		'knnc__n_neighbors': range(3, 14, 2),
 		# 'knnc__weights': ['uniform', 'distance'],
 		# 'knnc__metric': ['minkowski', 'euclidean'],
-		'knnc__p': [2]
+		# 'knnc__p': [1, 2]
 		}
 
 
