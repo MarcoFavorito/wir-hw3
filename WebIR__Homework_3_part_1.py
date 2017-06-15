@@ -35,8 +35,9 @@ def stemming_tokenizer(text):
 
 def main():
 	## Dataset containing Positive and neative sentences on Amazon products
-	data_folder_training_set = conf.HAM_SPAM_TRAINING_SET_DIR
-	data_folder_test_set     = conf.HAM_SPAM_TEST_SET_DIR
+	dataset_folder = conf.HAM_SPAM_DATASET_DIR
+	data_folder_training_set = dataset_folder + conf.TRAINING_DIR
+	data_folder_test_set = dataset_folder + conf.TEST_DIR
 
 	training_dataset = load_files(data_folder_training_set)
 	test_dataset = load_files(data_folder_test_set)
