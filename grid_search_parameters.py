@@ -12,6 +12,7 @@ ngrams = [(x, y) for x in range(min_start, max_start) for y in range(min_end, ma
 
 
 tfIdf_params = {
+	# Parametri SVM, quelli #### sono quelli che non erano commentati.
 	# 'input':[u'content'],
 	# 'encoding':[u'utf-8'],
 	# 'decode_error':[u'strict'],
@@ -34,6 +35,7 @@ tfIdf_params = {
 	# 'use_idf':[True],
 	#### 'sublinear_tf':[False, True] #Apply sublinear tf scaling, i.e. replace tf with 1 + log(tf).
 
+	# Parametri usati per MultinomialNB
 	# 'smooth_idf':[True], # prevents zero divisions
 	# 'norm':['l1', 'l2'], # not so relevant, I think
 	# 'tokenizer':[None, stemming_tokenizer], # notice: it applies only if analyazer='word'
