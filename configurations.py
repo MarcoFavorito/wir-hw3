@@ -7,6 +7,8 @@ GRID_SEARCH_CV_PARAMS = {
 VERBOSE = True
 VERBOSITY = 1
 
+
+POS_NEG_DATASET_DIR = "./data/Positve_negative_sentences/"
 HAM_SPAM_DATASET_DIR = "./data/Ham_Spam_comments/"
-HAM_SPAM_TRAINING_SET_DIR = HAM_SPAM_DATASET_DIR + "Training/"
-HAM_SPAM_TEST_SET_DIR = HAM_SPAM_DATASET_DIR + "Test/"
+TRAINING_DIR= "Training/"
+TEST_DIR = "Test/"
