@@ -22,12 +22,26 @@ tfIdf_params = {
 	# 'dtype':[np.int64],
 	# 'smooth_idf':[True], # prevents zero divisions
 	# 'norm':['l1', 'l2'], # not so relevant, I think
-	'tokenizer':[None, stemming_tokenizer], # notice: it applies only if analyazer='word'
-	'analyzer':['word', 'char'], # analysis by word or by char
-	'stop_words':[None, stopwords.words('english')], # Only applies if analyzer == 'word'.
-	'ngram_range':ngrams,
+	#### 'tokenizer':[None, stemming_tokenizer], # notice: it applies only if analyazer='word'
+	#### 'analyzer':['word', 'char'], # analysis by word or by char
+	#### 'stop_words':[None, stopwords.words('english')], # Only applies if analyzer == 'word'.
+	#### 'ngram_range':ngrams,
 	# 'max_df':[1.0], # is ignored if vocabulary is not None.
 	# 'min_df':[1,2], # int: absolute count of documents; float: proportion of documents.  is ignored if vocabulary is not None.
+	# 'max_features':[None], # maybe it is useful. is ignored if vocabulary is not None.
+	# 'vocabulary':[None],
+	#### 'binary':[True, False],
+	# 'use_idf':[True],
+	#### 'sublinear_tf':[False, True] #Apply sublinear tf scaling, i.e. replace tf with 1 + log(tf).
+
+	# 'smooth_idf':[True], # prevents zero divisions
+	# 'norm':['l1', 'l2'], # not so relevant, I think
+	# 'tokenizer':[None, stemming_tokenizer], # notice: it applies only if analyazer='word'
+	# 'analyzer':['word', 'char'], # analysis by word or by char
+	'stop_words': [stopwords.words('english')], # Only applies if analyzer == 'word'.
+	'ngram_range': [(1, x) for x in range(1, 3)],
+	'max_df': [0.175], # is ignored if vocabulary is not None.
+	'min_df': range(0, 6), # int: absolute count of documents; float: proportion of documents.  is ignored if vocabulary is not None.
 	# 'max_features':[None], # maybe it is useful. is ignored if vocabulary is not None.
 	# 'vocabulary':[None],
 	'binary':[True, False],
@@ -82,8 +96,7 @@ linearsvc_params = {
 	'max_iter':[1000]
 }
 
-
-
-
-
-
+mnbc_params = {
+	'alpha': [0.78, 0.775, 0.785],
+	'fit_prior': [False]
+}

@@ -4,6 +4,7 @@ from nltk.corpus import stopwords
 from sklearn import metrics
 from sklearn import svm
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.datasets import load_files
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import GridSearchCV
@@ -61,9 +62,10 @@ def main():
 	vectorizer_params =gsp.tfIdf_params
 
 	models = {
-		'kNN' : (KNeighborsClassifier(), gsp.kNN_params),
-		'SVC': (svm.SVC(), gsp.svc_params),
-		'LinearSVC': (svm.LinearSVC(), gsp.linearsvc_params)
+		# 'kNN' : (KNeighborsClassifier(), gsp.kNN_params),
+		# 'SVC': (svm.SVC(), gsp.svc_params),
+		# 'LinearSVC': (svm.LinearSVC(), gsp.linearsvc_params)
+		'MultinomialNB': (MultinomialNB(), gsp.mnbc_params)
 	}
 
 	model2results = {}
