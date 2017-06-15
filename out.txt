@@ -1,0 +1,883 @@
+Best Parameters:
+{'knnc__n_neighbors': 3,
+ 'knnc__weights': 'uniform',
+ 'vect__binary': True,
+ 'vect__max_df': 70,
+ 'vect__min_df': 14,
+ 'vect__smooth_idf': True,
+ 'vect__stop_words': None}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+        Ham       0.84      0.90      0.87        52
+       Spam       0.90      0.83      0.86        53
+
+avg / total       0.87      0.87      0.87       105
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[47  5]
+ [ 9 44]]
+
+metrics.accuracy_score
+0.866666666667
+Matthews corr. coeff
+0.735638114579
+
+
+
+
+
+
+
+
+
+
+Best Parameters:
+{'knnc__n_neighbors': 3,
+ 'vect__binary': False,
+ 'vect__max_df': 0.6000000000000001,
+ 'vect__min_df': 12,
+ 'vect__smooth_idf': True,
+ 'vect__stop_words': ['i',
+                      'me',
+                      'my',
+                      'myself',
+                      'we',
+                      'our',
+                      'ours',
+                      'ourselves',
+                      'you',
+                      'your',
+                      'yours',
+                      'yourself',
+                      'yourselves',
+                      'he',
+                      'him',
+                      'his',
+                      'himself',
+                      'she',
+                      'her',
+                      'hers',
+                      'herself',
+                      'it',
+                      'its',
+                      'itself',
+                      'they',
+                      'them',
+                      'their',
+                      'theirs',
+                      'themselves',
+                      'what',
+                      'which',
+                      'who',
+                      'whom',
+                      'this',
+                      'that',
+                      'these',
+                      'those',
+                      'am',
+                      'is',
+                      'are',
+                      'was',
+                      'were',
+                      'be',
+                      'been',
+                      'being',
+                      'have',
+                      'has',
+                      'had',
+                      'having',
+                      'do',
+                      'does',
+                      'did',
+                      'doing',
+                      'a',
+                      'an',
+                      'the',
+                      'and',
+                      'but',
+                      'if',
+                      'or',
+                      'because',
+                      'as',
+                      'until',
+                      'while',
+                      'of',
+                      'at',
+                      'by',
+                      'for',
+                      'with',
+                      'about',
+                      'against',
+                      'between',
+                      'into',
+                      'through',
+                      'during',
+                      'before',
+                      'after',
+                      'above',
+                      'below',
+                      'to',
+                      'from',
+                      'up',
+                      'down',
+                      'in',
+                      'out',
+                      'on',
+                      'off',
+                      'over',
+                      'under',
+                      'again',
+                      'further',
+                      'then',
+                      'once',
+                      'here',
+                      'there',
+                      'when',
+                      'where',
+                      'why',
+                      'how',
+                      'all',
+                      'any',
+                      'both',
+                      'each',
+                      'few',
+                      'more',
+                      'most',
+                      'other',
+                      'some',
+                      'such',
+                      'no',
+                      'nor',
+                      'not',
+                      'only',
+                      'own',
+                      'same',
+                      'so',
+                      'than',
+                      'too',
+                      'very',
+                      's',
+                      't',
+                      'can',
+                      'will',
+                      'just',
+                      'don',
+                      'should',
+                      'now',
+                      'd',
+                      'll',
+                      'm',
+                      'o',
+                      're',
+                      've',
+                      'y',
+                      'ain',
+                      'aren',
+                      'couldn',
+                      'didn',
+                      'doesn',
+                      'hadn',
+                      'hasn',
+                      'haven',
+                      'isn',
+                      'ma',
+                      'mightn',
+                      'mustn',
+                      'needn',
+                      'shan',
+                      'shouldn',
+                      'wasn',
+                      'weren',
+                      'won',
+                      'wouldn'],
+ 'vect__sublinear_tf': False,
+ 'vect__tokenizer': None}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+        Ham       0.84      1.00      0.91        52
+       Spam       1.00      0.81      0.90        53
+
+avg / total       0.92      0.90      0.90       105
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[52  0]
+ [10 43]]
+
+metrics.accuracy_score
+0.904761904762
+Matthews corr. coeff
+0.824901550776
+
+real	33m59.834s
+user	112m44.009s
+sys	0m41.215s
+
+
+
+Best Parameters:
+{'knnc__n_neighbors': 3,
+ 'vect__binary': True,
+ 'vect__max_df': 0.5,
+ 'vect__min_df': 13,
+ 'vect__smooth_idf': True,
+ 'vect__stop_words': None,
+ 'vect__sublinear_tf': True,
+ 'vect__tokenizer': None}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+        Ham       0.84      0.94      0.89        52
+       Spam       0.94      0.83      0.88        53
+
+avg / total       0.89      0.89      0.89       105
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[49  3]
+ [ 9 44]]
+
+metrics.accuracy_score
+0.885714285714
+Matthews corr. coeff
+0.776735454255
+
+real	12m4.270s
+user	41m24.296s
+sys	0m12.444s
+
+
+
+
+
+
+
+
+
+Best Parameters:
+{'knnc__n_neighbors': 7,
+ 'knnc__weights': 'uniform',
+ 'vect__binary': False,
+ 'vect__max_df': 0.3,
+ 'vect__min_df': 14,
+ 'vect__stop_words': ['i',
+                      'me',
+                      'my',
+                      'myself',
+                      'we',
+                      'our',
+                      'ours',
+                      'ourselves',
+                      'you',
+                      'your',
+                      'yours',
+                      'yourself',
+                      'yourselves',
+                      'he',
+                      'him',
+                      'his',
+                      'himself',
+                      'she',
+                      'her',
+                      'hers',
+                      'herself',
+                      'it',
+                      'its',
+                      'itself',
+                      'they',
+                      'them',
+                      'their',
+                      'theirs',
+                      'themselves',
+                      'what',
+                      'which',
+                      'who',
+                      'whom',
+                      'this',
+                      'that',
+                      'these',
+                      'those',
+                      'am',
+                      'is',
+                      'are',
+                      'was',
+                      'were',
+                      'be',
+                      'been',
+                      'being',
+                      'have',
+                      'has',
+                      'had',
+                      'having',
+                      'do',
+                      'does',
+                      'did',
+                      'doing',
+                      'a',
+                      'an',
+                      'the',
+                      'and',
+                      'but',
+                      'if',
+                      'or',
+                      'because',
+                      'as',
+                      'until',
+                      'while',
+                      'of',
+                      'at',
+                      'by',
+                      'for',
+                      'with',
+                      'about',
+                      'against',
+                      'between',
+                      'into',
+                      'through',
+                      'during',
+                      'before',
+                      'after',
+                      'above',
+                      'below',
+                      'to',
+                      'from',
+                      'up',
+                      'down',
+                      'in',
+                      'out',
+                      'on',
+                      'off',
+                      'over',
+                      'under',
+                      'again',
+                      'further',
+                      'then',
+                      'once',
+                      'here',
+                      'there',
+                      'when',
+                      'where',
+                      'why',
+                      'how',
+                      'all',
+                      'any',
+                      'both',
+                      'each',
+                      'few',
+                      'more',
+                      'most',
+                      'other',
+                      'some',
+                      'such',
+                      'no',
+                      'nor',
+                      'not',
+                      'only',
+                      'own',
+                      'same',
+                      'so',
+                      'than',
+                      'too',
+                      'very',
+                      's',
+                      't',
+                      'can',
+                      'will',
+                      'just',
+                      'don',
+                      'should',
+                      'now',
+                      'd',
+                      'll',
+                      'm',
+                      'o',
+                      're',
+                      've',
+                      'y',
+                      'ain',
+                      'aren',
+                      'couldn',
+                      'didn',
+                      'doesn',
+                      'hadn',
+                      'hasn',
+                      'haven',
+                      'isn',
+                      'ma',
+                      'mightn',
+                      'mustn',
+                      'needn',
+                      'shan',
+                      'shouldn',
+                      'wasn',
+                      'weren',
+                      'won',
+                      'wouldn'],
+ 'vect__sublinear_tf': True,
+ 'vect__use_idf': True}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+        Ham       0.85      1.00      0.92        52
+       Spam       1.00      0.83      0.91        53
+
+avg / total       0.93      0.91      0.91       105
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[52  0]
+ [ 9 44]]
+
+metrics.accuracy_score
+0.914285714286
+Matthews corr. coeff
+0.841250155976
+
+
+
+
+
+
+
+
+Best Parameters:
+{'knnc__metric': 'minkowski',
+ 'knnc__n_neighbors': 3,
+ 'knnc__weights': 'uniform',
+ 'vect__binary': False,
+ 'vect__max_df': 0.3,
+ 'vect__min_df': 14,
+ 'vect__stop_words': ['i',
+                      'me',
+                      'my',
+                      'myself',
+                      'we',
+                      'our',
+                      'ours',
+                      'ourselves',
+                      'you',
+                      'your',
+                      'yours',
+                      'yourself',
+                      'yourselves',
+                      'he',
+                      'him',
+                      'his',
+                      'himself',
+                      'she',
+                      'her',
+                      'hers',
+                      'herself',
+                      'it',
+                      'its',
+                      'itself',
+                      'they',
+                      'them',
+                      'their',
+                      'theirs',
+                      'themselves',
+                      'what',
+                      'which',
+                      'who',
+                      'whom',
+                      'this',
+                      'that',
+                      'these',
+                      'those',
+                      'am',
+                      'is',
+                      'are',
+                      'was',
+                      'were',
+                      'be',
+                      'been',
+                      'being',
+                      'have',
+                      'has',
+                      'had',
+                      'having',
+                      'do',
+                      'does',
+                      'did',
+                      'doing',
+                      'a',
+                      'an',
+                      'the',
+                      'and',
+                      'but',
+                      'if',
+                      'or',
+                      'because',
+                      'as',
+                      'until',
+                      'while',
+                      'of',
+                      'at',
+                      'by',
+                      'for',
+                      'with',
+                      'about',
+                      'against',
+                      'between',
+                      'into',
+                      'through',
+                      'during',
+                      'before',
+                      'after',
+                      'above',
+                      'below',
+                      'to',
+                      'from',
+                      'up',
+                      'down',
+                      'in',
+                      'out',
+                      'on',
+                      'off',
+                      'over',
+                      'under',
+                      'again',
+                      'further',
+                      'then',
+                      'once',
+                      'here',
+                      'there',
+                      'when',
+                      'where',
+                      'why',
+                      'how',
+                      'all',
+                      'any',
+                      'both',
+                      'each',
+                      'few',
+                      'more',
+                      'most',
+                      'other',
+                      'some',
+                      'such',
+                      'no',
+                      'nor',
+                      'not',
+                      'only',
+                      'own',
+                      'same',
+                      'so',
+                      'than',
+                      'too',
+                      'very',
+                      's',
+                      't',
+                      'can',
+                      'will',
+                      'just',
+                      'don',
+                      'should',
+                      'now',
+                      'd',
+                      'll',
+                      'm',
+                      'o',
+                      're',
+                      've',
+                      'y',
+                      'ain',
+                      'aren',
+                      'couldn',
+                      'didn',
+                      'doesn',
+                      'hadn',
+                      'hasn',
+                      'haven',
+                      'isn',
+                      'ma',
+                      'mightn',
+                      'mustn',
+                      'needn',
+                      'shan',
+                      'shouldn',
+                      'wasn',
+                      'weren',
+                      'won',
+                      'wouldn'],
+ 'vect__sublinear_tf': True,
+ 'vect__tokenizer': <function stemming_tokenizer at 0x10af37ae8>,
+ 'vect__use_idf': False}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+        Ham       0.83      1.00      0.90        52
+       Spam       1.00      0.79      0.88        53
+
+avg / total       0.91      0.90      0.89       105
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[52  0]
+ [11 42]]
+
+metrics.accuracy_score
+0.895238095238
+Matthews corr. coeff
+0.808757102173
+
+real	5m18.305s
+user	14m53.932s
+sys	0m6.862s
+
+
+
+
+Best Parameters:
+{'knnc__n_neighbors': 7,
+ 'knnc__p': 2,
+ 'knnc__weights': 'uniform',
+ 'vect__max_df': 0.3,
+ 'vect__min_df': 14,
+ 'vect__stop_words': ['i',
+                      'me',
+                      'my',
+                      'myself',
+                      'we',
+                      'our',
+                      'ours',
+                      'ourselves',
+                      'you',
+                      'your',
+                      'yours',
+                      'yourself',
+                      'yourselves',
+                      'he',
+                      'him',
+                      'his',
+                      'himself',
+                      'she',
+                      'her',
+                      'hers',
+                      'herself',
+                      'it',
+                      'its',
+                      'itself',
+                      'they',
+                      'them',
+                      'their',
+                      'theirs',
+                      'themselves',
+                      'what',
+                      'which',
+                      'who',
+                      'whom',
+                      'this',
+                      'that',
+                      'these',
+                      'those',
+                      'am',
+                      'is',
+                      'are',
+                      'was',
+                      'were',
+                      'be',
+                      'been',
+                      'being',
+                      'have',
+                      'has',
+                      'had',
+                      'having',
+                      'do',
+                      'does',
+                      'did',
+                      'doing',
+                      'a',
+                      'an',
+                      'the',
+                      'and',
+                      'but',
+                      'if',
+                      'or',
+                      'because',
+                      'as',
+                      'until',
+                      'while',
+                      'of',
+                      'at',
+                      'by',
+                      'for',
+                      'with',
+                      'about',
+                      'against',
+                      'between',
+                      'into',
+                      'through',
+                      'during',
+                      'before',
+                      'after',
+                      'above',
+                      'below',
+                      'to',
+                      'from',
+                      'up',
+                      'down',
+                      'in',
+                      'out',
+                      'on',
+                      'off',
+                      'over',
+                      'under',
+                      'again',
+                      'further',
+                      'then',
+                      'once',
+                      'here',
+                      'there',
+                      'when',
+                      'where',
+                      'why',
+                      'how',
+                      'all',
+                      'any',
+                      'both',
+                      'each',
+                      'few',
+                      'more',
+                      'most',
+                      'other',
+                      'some',
+                      'such',
+                      'no',
+                      'nor',
+                      'not',
+                      'only',
+                      'own',
+                      'same',
+                      'so',
+                      'than',
+                      'too',
+                      'very',
+                      's',
+                      't',
+                      'can',
+                      'will',
+                      'just',
+                      'don',
+                      'should',
+                      'now',
+                      'd',
+                      'll',
+                      'm',
+                      'o',
+                      're',
+                      've',
+                      'y',
+                      'ain',
+                      'aren',
+                      'couldn',
+                      'didn',
+                      'doesn',
+                      'hadn',
+                      'hasn',
+                      'haven',
+                      'isn',
+                      'ma',
+                      'mightn',
+                      'mustn',
+                      'needn',
+                      'shan',
+                      'shouldn',
+                      'wasn',
+                      'weren',
+                      'won',
+                      'wouldn'],
+ 'vect__sublinear_tf': True,
+ 'vect__tokenizer': <function stemming_tokenizer at 0x10e39dae8>}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+        Ham       0.85      1.00      0.92        52
+       Spam       1.00      0.83      0.91        53
+
+avg / total       0.93      0.91      0.91       105
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[52  0]
+ [ 9 44]]
+
+metrics.accuracy_score
+0.914285714286
+Matthews corr. coeff
+0.841250155976
+
+real	0m35.483s
+user	1m50.309s
+sys	0m0.879s
+
+
+
+
+
+
+
+
