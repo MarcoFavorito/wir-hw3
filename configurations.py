@@ -1,6 +1,6 @@
 # let the library to know how many jobs it has to allocate
 GRID_SEARCH_CV_PARAMS = {
-	"n_jobs" : -1,
+	"n_jobs" : 4,
 	"cv" : 10
 }
 

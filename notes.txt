@@ -43,3 +43,21 @@ International Journal of Machine Learning and Computing 2.4 (2012): 423-426.
 --------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------
 
+Notes on SVM
+
+scikit-learn.org/stable/modules/svm.html
+Tips:
+- Setting C: C is 1 by default and it’s a reasonable default choice. If you have a lot of noisy observations you should decrease it. It corresponds to regularize more the estimation.
+- Support Vector Machine algorithms are not scale invariant, so it is highly recommended
+    to scale your data. For example, scale each attribute on the input vector X to [0,1] or [-1,+1],
+    or standardize it to have mean 0 and variance 1. Note that the same scaling must be applied
+    to the test vector to obtain meaningful results.
+    See section Preprocessing data for more details on scaling and normalization.
+- The underlying LinearSVC implementation uses a random number generator to select features when fitting the model. It is thus not uncommon, to have slightly different results for the same input data. If that happens, try with a smaller tol parameter.
+- Using L1 penalization as provided by LinearSVC(loss='l2', penalty='l1', dual=False)
+    yields a sparse solution, i.e. only a subset of feature weights is different from zero
+    and contribute to the decision function. Increasing C yields a more complex model
+    (more feature are selected). The C value that yields a “null” model (all weights equal to zero) can be calculated using l1_min_c.
+- dual : bool, (default=True)
+    Select the algorithm to either solve the dual or primal optimization problem.
+    Prefer dual=False when n_samples > n_features.

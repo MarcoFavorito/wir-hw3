@@ -1,21 +1,17 @@
-import pprint as pp
-
-from nltk.corpus import stopwords
 from sklearn import metrics
 from sklearn import svm
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import MultinomialNB
 from sklearn.datasets import load_files
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.neighbors import KNeighborsClassifier
 
 import configurations as conf
-from utils import debug_print
-from utils import stemming_tokenizer
 import grid_search as gs
 import grid_search_parameters as gsp
+from utils import debug_print
+
 
 def main():
 
@@ -64,8 +60,9 @@ def main():
 	models = {
 		# 'kNN' : (KNeighborsClassifier(), gsp.kNN_params),
 		# 'SVC': (svm.SVC(), gsp.svc_params),
-		# 'LinearSVC': (svm.LinearSVC(), gsp.linearsvc_params)
-		'MultinomialNB': (MultinomialNB(), gsp.mnbc_params)
+		'LinearSVC': (svm.LinearSVC(), gsp.linearsvc_params),
+		# 'SGDClassifier': (SGDClassifier(), gsp.sgdclassifier_params),
+		# 'MultinomialNB': (MultinomialNB(), gsp.mnbc_params)
 	}
 
 	model2results = {}
