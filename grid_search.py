@@ -29,6 +29,32 @@ def hw3_grid_search(vectorizer, vectorizer_params, classifier, classifier_params
 
 	return grid_search
 
+def hw3_grid_search_enhanced(model_params_list):
+	"""
+	Grid search for Homework 3
+	:param model_params_list: list of (models, parameters_ranges::dict)
+	:return: a GridSearchCV instance
+	"""
+
+	labeled_models = [(name, model) for (name, model, _) in model_params_list]
+
+	pipeline = Pipeline(labeled_models)
+
+	parameters = dict(
+		[(name + "__" + key, value)
+		 for i,(name, _, params) in enumerate(model_params_list)
+		 for key,value in params.items()]
+	)
+
+	grid_search = GridSearchCV(pipeline,
+							   parameters,
+							   scoring=metrics.make_scorer(metrics.matthews_corrcoef),
+							   cv=conf.GRID_SEARCH_CV_PARAMS["cv"],
+							   n_jobs=conf.GRID_SEARCH_CV_PARAMS["n_jobs"],
+							   verbose=1)
+
+	return grid_search
+
 def print_grid_search_summary(grid_search):
 	## debug_print results for each combination of parameters.
 	number_of_candidates = len(grid_search.cv_results_['params'])
