@@ -58,9 +58,9 @@ def main():
 	vectorizer_params =gsp.tfIdf_params
 
 	models = {
-		# 'kNN' : (KNeighborsClassifier(), gsp.kNN_params),
+		'kNN' : (KNeighborsClassifier(), gsp.kNN_params),
 		# 'SVC': (svm.SVC(), gsp.svc_params),
-		'LinearSVC': (svm.LinearSVC(), gsp.linearsvc_params),
+		# 'LinearSVC': (svm.LinearSVC(), gsp.linearsvc_params),
 		# 'SGDClassifier': (SGDClassifier(), gsp.sgdclassifier_params),
 		# 'MultinomialNB': (MultinomialNB(), gsp.mnbc_params)
 	}

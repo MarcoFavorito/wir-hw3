@@ -51,22 +51,35 @@ tfIdf_params = {
 	# 'sublinear_tf':[False, True] #Apply sublinear tf scaling, i.e. replace tf with 1 + log(tf).
 
 	# Parametri per LinearSVC
-	'tokenizer':[stemming_tokenizer], # notice: it applies only if analyazer='word'
-	'stop_words':[stopwords.words('english')], # Only applies if analyzer == 'word'.
-	'ngram_range':[(1,2)],
+	### 'tokenizer':[stemming_tokenizer], # notice: it applies only if analyazer='word'
+	### 'stop_words':[stopwords.words('english')], # Only applies if analyzer == 'word'.
+	### 'ngram_range':[(1,2)],
 	# 'max_df':[1.0, 0.95], # is ignored if vocabulary is not None.
-	'min_df':range(1,3), # int: absolute count of documents; float: proportion of documents.  is ignored if vocabulary is not None.
+	### 'min_df':range(1,3), # int: absolute count of documents; float: proportion of documents.  is ignored if vocabulary is not None.
 	# 'max_features':[None], # maybe it is useful. is ignored if vocabulary is not None.
 	# 'vocabulary':[None],
 	# 'binary':[True, False],
 	# 'use_idf':[True, False],
-	'sublinear_tf':[True] #Apply sublinear tf scaling, i.e. replace tf with 1 + log(tf).
+	### 'sublinear_tf':[True] #Apply sublinear tf scaling, i.e. replace tf with 1 + log(tf).
 
+	# Parametri per kNN
+	# 'tokenizer': [None, stemming_tokenizer], # [None, stemming_tokenizer],
+	# 'analyzer': ['word', 'char'],
+	# 'analyzer': ['char'],
+	'stop_words': [stopwords.words('english')],
+	'max_df': [0.2],
+	# 'min_df': range(0, 3),
+	'binary': [True],
+	# 'use_idf': [True, False],
+	'smooth_idf': [False],
+	'sublinear_tf': [True],
+	'ngram_range': [(1,4)],
+	# 'ngram_range': [(3, x) for x in range(3, 10)],
 
 }
 
 max_k_neighbor = 10
-min_k_neighbor = 1
+min_k_neighbor = 3
 kNN_params = {
 	# 'algorithm':[‘auto’, ‘ball_tree’, ‘kd_tree’, ‘brute’], # default is auto, let it free to chose
 	# 'leaf_size':[30],
