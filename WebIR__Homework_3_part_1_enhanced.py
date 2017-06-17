@@ -101,28 +101,29 @@ def main():
 	##  Values are set of values to try for a particular parameter.
 	parameters = {
 		'vect__tokenizer': [stemming_tokenizer], # [None, stemming_tokenizer],
-		# 'vect__analyzer': ['word', 'char'],
+		'vect__analyzer': ['char'],
 		# 'vect__norm': ['l1', 'l2'],
 		# 'vect__analyzer': ['char'],
 		'vect__stop_words': [en_stopwords], # [None, en_stopwords],
-		'vect__max_df': [1.0],
-		'vect__min_df': [14],
+		# 'vect__max_df': [1.0],
+		'vect__min_df': [1],
 		# 'vect__binary': [True, False],
 		# 'vect__use_idf': [True, False],
 		'vect__smooth_idf': [True],
 		'vect__sublinear_tf': [True], # [True, False],
 		# 'vect__ngram_range': [(1, x) for x in range(1, 2)],
-		'vect__ngram_range': [(1,2)],
-		# 'vect__ngram_range': [(3, x) for x in range(3, 10)],
+		# 'vect__ngram_range': [(2,4),(1,6), (1,7)],
+		# 'vect__ngram_range': [(x, y) for x in range(1, 10) for y in range(1,20) if x<=y],
+		'vect__ngram_range': [(1,6)],
 		# 'svd__n_components': ['mle'],
 		# 'svd__svd_solver' : ['full'],
 		'svd__n_components':[6],
-		'svd__algorithm': ['randomized'],
+		# 'svd__algorithm': ['randomized'],
 		# 'svd__n_iter': [5, 10],
-		'knnc__n_neighbors': [7],
+		'knnc__n_neighbors': [3],
 		'knnc__weights': ['distance'],
 		# 'knnc__metric': ['minkowski', 'euclidean'],
-		# 'knnc__p': [1, 2, 3],
+		'knnc__p': [3],
 		# 'knnc__algorithm': ['ball_tree', 'kd_tree'],
 		# 'knnc__leaf_size' : [7, 15, 30, 60, 120]
 		}
@@ -200,9 +201,9 @@ def main():
 
 	fitted_vectorizer = grid_search.best_estimator_.steps[0][1]
 	print("vocabulary len:",len(fitted_vectorizer.vocabulary_))
-	print("vocabulary terms:")
-	for k,v in fitted_vectorizer.vocabulary_.items():
-		print("\t",k, v)
+	# print("vocabulary terms:")
+	# for k,v in fitted_vectorizer.vocabulary_.items():
+	# 	print("\t",k, v)
 
 	for x,yt,yp in zip(X_test, Y_test, Y_predicted):
 		if yt!=yp:
@@ -215,7 +216,11 @@ def main():
 			reconstructed_sentence = " ".join(inverse_transformed_sentence[0])
 			print("reconstruction: ", reconstructed_sentence)
 
+	debug_print("metrics.accuracy_score")
+	debug_print(metrics.accuracy_score(Y_test, Y_predicted))
 
+	debug_print("Matthews corr. coeff")
+	debug_print(metrics.matthews_corrcoef(Y_test, Y_predicted))
 
 
 # grid_search.best_estimator_.steps[0][1].inverse_transform([grid_search.best_estimator_.steps[0][1].transform(["attention we need 10 million views more for firework to reach 500m we have only 1 and half day left for katy s birtgday listen how it could be possible gt gt just open different tabs from different browser gt gt dont watch full video remember we dont have time on hand its time wasting view it only for 30 sec plz thumbs up and share"])[0]])
