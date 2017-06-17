@@ -197,8 +197,29 @@ def main():
 	debug_print("Matthews corr. coeff")
 	debug_print(metrics.matthews_corrcoef(Y_test, Y_predicted))
 
+
+	fitted_vectorizer = grid_search.best_estimator_.steps[0][1]
+	print("vocabulary len:",len(fitted_vectorizer.vocabulary_))
+	print("vocabulary terms:")
+	for k,v in fitted_vectorizer.vocabulary_.items():
+		print("\t",k, v)
+
 	for x,yt,yp in zip(X_test, Y_test, Y_predicted):
-		if yt!=yp: print(yp, yt, x)
+		if yt!=yp:
+			print(yp, yt, x)
+			A = fitted_vectorizer.transform([x])
+			vectorized_sentence = A[0] # this will have a lot of missing words from the original sentence
+			inverse_transformed_sentence = fitted_vectorizer.inverse_transform(vectorized_sentence)
+			# subscriptor "[0]" because the result is:
+			# inverse_transformed_sentence=[array(['video', 'song', 'perri', 'kati perri', 'kati'], dtype='<U12')]
+			reconstructed_sentence = " ".join(inverse_transformed_sentence[0])
+			print("reconstruction: ", reconstructed_sentence)
+
+
+
+
+# grid_search.best_estimator_.steps[0][1].inverse_transform([grid_search.best_estimator_.steps[0][1].transform(["attention we need 10 million views more for firework to reach 500m we have only 1 and half day left for katy s birtgday listen how it could be possible gt gt just open different tabs from different browser gt gt dont watch full video remember we dont have time on hand its time wasting view it only for 30 sec plz thumbs up and share"])[0]])
+
 
 # if __name__ == '__main__':
 main()
