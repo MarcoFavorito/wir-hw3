@@ -6,6 +6,8 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.decomposition import TruncatedSVD
+
 
 import configurations as conf
 import grid_search as gs
@@ -55,22 +57,33 @@ def main():
 	debug_print("----------------------")
 
 	vectorizer = TfidfVectorizer(strip_accents= None, preprocessor = None)
-	vectorizer_params =gsp.tfIdf_params
 
+	# We define the set of model to fit
+	# for each of them, we define a new "Pipeline", i.e. a list of pairs (name, model, params)
 	models = {
-		'kNN' : (KNeighborsClassifier(), gsp.kNN_params),
-		# 'LinearSVC': (svm.LinearSVC(), gsp.linearsvc_params),
-		# 'MultinomialNB': (MultinomialNB(), gsp.mnbc_params)
-		# 'SVC': (svm.SVC(), gsp.svc_params),
-		# 'SGDClassifier': (SGDClassifier(), gsp.sgdclassifier_params),
+		# 'kNN' : [
+		# 	("vectorizer", vectorizer, gsp.vectorizer_params["kNN"]),
+		# 	("kNN", KNeighborsClassifier(), gsp.kNN_params)
+		# ],
+		# 'LinearSVC': [
+		# 	("vectorizer", vectorizer, gsp.vectorizer_params["LinearSVC"]),
+		# 	("linsvm", svm.LinearSVC(), gsp.linearsvc_params)
+		# 	],
+		#
+		'MultinomialNB': [
+			("vectorizer", vectorizer, gsp.vectorizer_params["MultinomialNB"]),
+			("nbc", MultinomialNB(), gsp.mnbc_params)
+		]
+
 	}
 
-
+	# Here we store the final results for each model
 	model2results = {}
 
-	for model_name, (classifier, classifier_params) in models.items():
+	# Perform the grid search for each predefined model
+	for model_name, models_params_list in models.items():
 		debug_print("Current model: %s" % model_name)
-		grid_search = gs.hw3_grid_search(vectorizer, vectorizer_params, classifier, classifier_params)
+		grid_search = gs.hw3_grid_search_enhanced(models_params_list)
 
 		grid_search.fit(X_train, Y_train)
 		gs.print_grid_search_summary(grid_search)
@@ -101,8 +114,7 @@ def main():
 		debug_print("Matthews corr. coeff")
 		matthews_corrcoef = metrics.matthews_corrcoef(Y_test, Y_predicted)
 		debug_print(matthews_corrcoef)
-		for x,yt,yp in zip(X_test, Y_test, Y_predicted):
-			if yt!=yp: print(yp, yt, x)
+
 
 		# Here we save the values for the current tested model
 		model2results[model_name] = {
