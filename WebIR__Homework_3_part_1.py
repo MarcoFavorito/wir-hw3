@@ -137,6 +137,7 @@ def main():
 		'vect__tokenizer': [stemming_tokenizer, porter_stemming_tokenizer, lancaster_stemming_tokenizer], # [None, stemming_tokenizer],
 		# 'vect__analyzer': ['word', 'char'],
 		# 'vect__analyzer': ['char'],
+		'vect__norm' : [None, 'l1', 'l2'],
 		'vect__stop_words': [en_stopwords], # [None, en_stopwords],
 		'vect__max_df': [0.3],
 		'vect__min_df': [14], # range(10, 20, 2),
@@ -147,7 +148,7 @@ def main():
 		# 'vect__ngram_range': [(1, x) for x in range(1, 4)],
 		# 'vect__ngram_range': [(3, x) for x in range(3, 10)],
 
-		'knnc__n_neighbors': range(3, 14, 2),
+		'knnc__n_neighbors': [7],
 		# 'knnc__weights': ['uniform', 'distance'],
 		# 'knnc__metric': ['minkowski', 'euclidean'],
 		# 'knnc__p': [1, 2]
@@ -225,6 +226,11 @@ def main():
 
 	for x,yt,yp in zip(X_test, Y_test, Y_predicted):
 		if yt!=yp: print(yp, yt, x)
+
+	vocb = grid_search.best_estimator_.steps[0][1].vocabulary_
+	print("vocabulary len:",len(vocb))
+	for k,v in vocb.items():
+		print(k,v)
 
 # if __name__ == '__main__':
 main()
