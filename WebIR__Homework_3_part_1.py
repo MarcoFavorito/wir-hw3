@@ -176,7 +176,7 @@ first_version_params = {
 	# 'vect__binary': [True, False],
 	# 'vect__use_idf': [True, False],
 	# 'vect__smooth_idf': [True, False],
-	# 'vect__sublinear_tf': [True, False]
+	# 'vect__sublinear_tf': [True, False],
 	# 'vect__norm': ['l1', 'l2'],
 	# 'svd__n_components':range(1,11),
 	# 'knnc__n_neighbors': range(3, 10),
@@ -213,7 +213,7 @@ second_version_params = {
 	# 'vect__binary': [True, False],
 	# 'vect__use_idf': [True, False],
 	# 'vect__smooth_idf': [True, False],
-	# 'vect__sublinear_tf': [True, False]
+	# 'vect__sublinear_tf': [True, False],
 	# 'vect__norm': ['l1', 'l2'],
 	# 'svd__n_components':range(1,11),
 	# 'knnc__n_neighbors': range(3, 10),
