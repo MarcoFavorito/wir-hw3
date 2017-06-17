@@ -116,7 +116,7 @@ def main():
 		# 'vect__ngram_range': [(3, x) for x in range(3, 10)],
 		# 'svd__n_components': ['mle'],
 		# 'svd__svd_solver' : ['full'],
-		'svd__n_components':[4],
+		'svd__n_components':[6],
 		'svd__algorithm': ['randomized'],
 		# 'svd__n_iter': [5, 10],
 		'knnc__n_neighbors': [7],
