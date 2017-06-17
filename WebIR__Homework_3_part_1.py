@@ -181,7 +181,7 @@ first_version_params = {
 	# 'svd__n_components':range(1,11),
 	# 'knnc__n_neighbors': range(3, 10),
 	# 'knnc__weights': ['uniform', 'distance'],
-	# 'knnc__p': [1, 2, 3],
+	# 'knnc__p': [1, 2],
 }
 
 # Set of parameters for the second version of the classifier.
