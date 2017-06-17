@@ -84,7 +84,7 @@ def main():
 	# Perform the grid search for each predefined model
 	for model_name, models_params_list in models.items():
 		debug_print("Current model: %s" % model_name)
-		grid_search = gs.hw3_grid_search_enhanced(models_params_list)
+		grid_search = gs.hw3_grid_search(models_params_list)
 
 		grid_search.fit(X_train, Y_train)
 		gs.print_grid_search_summary(grid_search)

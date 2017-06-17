@@ -7,29 +7,7 @@ from sklearn.pipeline import Pipeline
 import configurations as conf
 from utils import debug_print
 
-
-def hw3_grid_search(vectorizer, vectorizer_params, classifier, classifier_params):
-
-	pipeline = Pipeline([
-		('vectorizer', vectorizer),
-		('classifier', classifier),
-	])
-
-	parameters = dict(
-		[('vectorizer__'+key, value) for key,value in vectorizer_params.items()] +\
-	 	[('classifier__'+key, value) for key,value in classifier_params.items()]
-	)
-
-	grid_search = GridSearchCV(pipeline,
-							   parameters,
-							   scoring=metrics.make_scorer(metrics.matthews_corrcoef),
-							   cv=conf.GRID_SEARCH_CV_PARAMS["cv"],
-							   n_jobs=conf.GRID_SEARCH_CV_PARAMS["n_jobs"],
-							   verbose=1)
-
-	return grid_search
-
-def hw3_grid_search_enhanced(model_params_list):
+def hw3_grid_search(model_params_list):
 	"""
 	Grid search for Homework 3
 	:param model_params_list: list of (models, parameters_ranges::dict)
