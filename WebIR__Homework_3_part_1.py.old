@@ -1,18 +1,53 @@
-import pprint as pp
-from os import system
+import string
+
+from sklearn.datasets import load_files
+from sklearn.model_selection import train_test_split
+
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 from nltk.corpus import stopwords
-from sklearn import metrics
-from sklearn import neighbors
-from sklearn.datasets import load_files
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
+from nltk.stem.snowball import EnglishStemmer
+from nltk.stem.porter import PorterStemmer
+from nltk.stem.lancaster import LancasterStemmer
+from nltk import word_tokenize
+
+from sklearn.naive_bayes import MultinomialNB
+from sklearn import neighbors, datasets
+
 from sklearn.pipeline import Pipeline
-from sklearn.decomposition import TruncatedSVD
+from sklearn.model_selection import GridSearchCV
+
+from sklearn import metrics
+
+import pprint as pp
 
 import configurations as conf
-from utils import debug_print, stemming_tokenizer, porter_stemming_tokenizer, lancaster_stemming_tokenizer
+from utils import debug_print
+import nltk
+from nltk.corpus import stopwords
+
+from os import system
+
+############################################
+stemmer = EnglishStemmer()
+porter_stemmer = PorterStemmer()
+lancaster_stemmer = LancasterStemmer()
+
+def stemming_tokenizer(text):
+	stemmed_text = [stemmer.stem(word) for word in word_tokenize(text, language='english')]
+	return stemmed_text
+
+def porter_stemming_tokenizer(text):
+	stemmed_text = [porter_stemmer.stem(word) for word in word_tokenize(text, language='english')]
+	return stemmed_text
+
+def lancaster_stemming_tokenizer(text):
+	stemmed_text = [lancaster_stemmer.stem(word) for word in word_tokenize(text, language='english')]
+	return stemmed_text
+
+
+######################################################################
+
 
 def main():
 	## Dataset containing Positive and neative sentences on Amazon products
@@ -61,71 +96,33 @@ def main():
 	debug_print("----------------------")
 
 
-
-	## Vectorization object
-	# ----------------------------------------
-	# @Marco:	We can use the "preprocessor" or "stop_words" argument
-	# 			To pass some callback function
-	#			as explained by Fazzone:
-	#
-	#			"You are also allowed to use tools offered by NLTK libraries:
-	# 			for example, to perform stemming and to have a set of stopwords."
-	# ----------------------------------------
-
-	# Fazzone's version:
 	vectorizer = TfidfVectorizer(strip_accents=None, preprocessor=None)
-
-	# for Multinomial Naive Bayes, it seems to perform worse than Fazzone...
-	# with stopwords:	avg / total       0.90      0.90      0.90       105
-	# without:			avg / total       0.93      0.92      0.92       105
-	# The grid search always select stop_words=None. See after in "parameters".
-
-	## classifier
-	# nbc = MultinomialNB()
 	knnc = neighbors.KNeighborsClassifier()
-
-	svd = TruncatedSVD()
-	## With a Pipeline object we can assemble several steps
-	## that can be cross-validated together while setting different parameters.
 
 	pipeline = Pipeline([
 		('vect', vectorizer),
-		('svd', svd),
 		('knnc', knnc),
 		])
 
-
-	## Setting parameters.
-	## Dictionary in which:
-	##  Keys are parameters of objects in the pipeline.
-	##  Values are set of values to try for a particular parameter.
 	parameters = {
-		'vect__tokenizer': [stemming_tokenizer], # [None, stemming_tokenizer],
-		'vect__analyzer': ['char'],
-		# 'vect__norm': ['l1', 'l2'],
+		'vect__tokenizer': [stemming_tokenizer, porter_stemming_tokenizer, lancaster_stemming_tokenizer], # [None, stemming_tokenizer],
+		# 'vect__analyzer': ['word', 'char'],
 		# 'vect__analyzer': ['char'],
+		'vect__norm' : [None, 'l1', 'l2'],
 		'vect__stop_words': [en_stopwords], # [None, en_stopwords],
-		# 'vect__max_df': [1.0],
-		'vect__min_df': [1],
+		'vect__max_df': [0.3],
+		'vect__min_df': [14], # range(10, 20, 2),
 		# 'vect__binary': [True, False],
 		# 'vect__use_idf': [True, False],
-		'vect__smooth_idf': [True],
+		# 'vect__smooth_idf': [True, False],
 		'vect__sublinear_tf': [True], # [True, False],
-		# 'vect__ngram_range': [(1, x) for x in range(1, 2)],
-		# 'vect__ngram_range': [(2,4),(1,6), (1,7)],
-		# 'vect__ngram_range': [(x, y) for x in range(1, 10) for y in range(1,20) if x<=y],
-		'vect__ngram_range': [(1,6)],
-		# 'svd__n_components': ['mle'],
-		# 'svd__svd_solver' : ['full'],
-		'svd__n_components':[6],
-		# 'svd__algorithm': ['randomized'],
-		# 'svd__n_iter': [5, 10],
-		'knnc__n_neighbors': [3],
-		'knnc__weights': ['distance'],
+		# 'vect__ngram_range': [(1, x) for x in range(1, 4)],
+		# 'vect__ngram_range': [(3, x) for x in range(3, 10)],
+
+		'knnc__n_neighbors': [7],
+		# 'knnc__weights': ['uniform', 'distance'],
 		# 'knnc__metric': ['minkowski', 'euclidean'],
-		'knnc__p': [3],
-		# 'knnc__algorithm': ['ball_tree', 'kd_tree'],
-		# 'knnc__leaf_size' : [7, 15, 30, 60, 120]
+		# 'knnc__p': [1, 2]
 		}
 
 
@@ -198,34 +195,18 @@ def main():
 	debug_print("Matthews corr. coeff")
 	debug_print(metrics.matthews_corrcoef(Y_test, Y_predicted))
 
-
-	fitted_vectorizer = grid_search.best_estimator_.steps[0][1]
-	print("vocabulary len:",len(fitted_vectorizer.vocabulary_))
-	# print("vocabulary terms:")
-	# for k,v in fitted_vectorizer.vocabulary_.items():
-	# 	print("\t",k, v)
-
 	for x,yt,yp in zip(X_test, Y_test, Y_predicted):
-		if yt!=yp:
-			print(yp, yt, x)
-			A = fitted_vectorizer.transform([x])
-			vectorized_sentence = A[0] # this will have a lot of missing words from the original sentence
-			inverse_transformed_sentence = fitted_vectorizer.inverse_transform(vectorized_sentence)
-			# subscriptor "[0]" because the result is:
-			# inverse_transformed_sentence=[array(['video', 'song', 'perri', 'kati perri', 'kati'], dtype='<U12')]
-			reconstructed_sentence = " ".join(inverse_transformed_sentence[0])
-			print("reconstruction: ", reconstructed_sentence)
+		if yt!=yp: print(yp, yt, x)
 
-	debug_print("metrics.accuracy_score")
-	debug_print(metrics.accuracy_score(Y_test, Y_predicted))
+	vocb = grid_search.best_estimator_.steps[0][1].vocabulary_
+	print("vocabulary len:",len(vocb))
+	for k,v in vocb.items():
+		print(k,v)
 
-	debug_print("Matthews corr. coeff")
-	debug_print(metrics.matthews_corrcoef(Y_test, Y_predicted))
+if __name__ == '__main__':
+	main()
 
 
-# grid_search.best_estimator_.steps[0][1].inverse_transform([grid_search.best_estimator_.steps[0][1].transform(["attention we need 10 million views more for firework to reach 500m we have only 1 and half day left for katy s birtgday listen how it could be possible gt gt just open different tabs from different browser gt gt dont watch full video remember we dont have time on hand its time wasting view it only for 30 sec plz thumbs up and share"])[0]])
+first_version_params = {
 
-
-# if __name__ == '__main__':
-main()
-system('say Fatto')
+}

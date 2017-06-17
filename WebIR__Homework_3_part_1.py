@@ -1,52 +1,19 @@
-import string
-
-from sklearn.datasets import load_files
-from sklearn.model_selection import train_test_split
-
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-from nltk.corpus import stopwords
-from nltk.stem.snowball import EnglishStemmer
-from nltk.stem.porter import PorterStemmer
-from nltk.stem.lancaster import LancasterStemmer
-from nltk import word_tokenize
-
-from sklearn.naive_bayes import MultinomialNB
-from sklearn import neighbors, datasets
-
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import GridSearchCV
-
-from sklearn import metrics
-
 import pprint as pp
-
-import configurations as conf
-from utils import debug_print
-import nltk
-from nltk.corpus import stopwords
-
 from os import system
 
-############################################
-stemmer = EnglishStemmer()
-porter_stemmer = PorterStemmer()
-lancaster_stemmer = LancasterStemmer()
+from nltk.corpus import stopwords
+from sklearn import metrics
+from sklearn import neighbors
+from sklearn.datasets import load_files
+from sklearn.decomposition import TruncatedSVD
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, MaxAbsScaler
 
-def stemming_tokenizer(text):
-	stemmed_text = [stemmer.stem(word) for word in word_tokenize(text, language='english')]
-	return stemmed_text
-
-def porter_stemming_tokenizer(text):
-	stemmed_text = [porter_stemmer.stem(word) for word in word_tokenize(text, language='english')]
-	return stemmed_text
-
-def lancaster_stemming_tokenizer(text):
-	stemmed_text = [lancaster_stemmer.stem(word) for word in word_tokenize(text, language='english')]
-	return stemmed_text
-
-
-######################################################################
+import configurations as conf
+from utils import debug_print, stemming_tokenizer, porter_stemming_tokenizer, lancaster_stemming_tokenizer
 
 
 def main():
@@ -63,11 +30,6 @@ def main():
 	debug_print("----------------------")
 	debug_print()
 
-	# from https://stackoverflow.com/questions/22763224/nltk-stopword-list
-	# >	"stopwords.words('english') returns a list of lowercase stop words.
-	# 	It is quite likely that your source has capital letters in it
-	# 	and is not matching for that reason.
-	en_stopwords = stopwords.words('english')
 
 	# Load Training-Set
 	X_train, _, Y_train, _ = train_test_split(training_dataset.data,
@@ -95,64 +57,25 @@ def main():
 	debug_print(target_names)
 	debug_print("----------------------")
 
-
-
-	## Vectorization object
-	# ----------------------------------------
-	# @Marco:	We can use the "preprocessor" or "stop_words" argument
-	# 			To pass some callback function
-	#			as explained by Fazzone:
-	#
-	#			"You are also allowed to use tools offered by NLTK libraries:
-	# 			for example, to perform stemming and to have a set of stopwords."
-	# ----------------------------------------
-
-	# Fazzone's version:
 	vectorizer = TfidfVectorizer(strip_accents=None, preprocessor=None)
-
-	# for Multinomial Naive Bayes, it seems to perform worse than Fazzone...
-	# with stopwords:	avg / total       0.90      0.90      0.90       105
-	# without:			avg / total       0.93      0.92      0.92       105
-	# The grid search always select stop_words=None. See after in "parameters".
-
-	## classifier
-	# nbc = MultinomialNB()
-	knnc = neighbors.KNeighborsClassifier()
-
-
-	## With a Pipeline object we can assemble several steps
-	## that can be cross-validated together while setting different parameters.
+	svd = TruncatedSVD(n_iter=50)
+	knnc = neighbors.KNeighborsClassifier(metric="minkowski")
 
 	pipeline = Pipeline([
 		('vect', vectorizer),
+		('svd', svd), # comment this line if you want to check the first version
 		('knnc', knnc),
 		])
 
-
 	## Setting parameters.
 	## Dictionary in which:
-	##  Keys are parameters of objects in the pipeline.
-	##  Values are set of values to try for a particular parameter.
-	parameters = {
-		'vect__tokenizer': [stemming_tokenizer, porter_stemming_tokenizer, lancaster_stemming_tokenizer], # [None, stemming_tokenizer],
-		# 'vect__analyzer': ['word', 'char'],
-		# 'vect__analyzer': ['char'],
-		'vect__norm' : [None, 'l1', 'l2'],
-		'vect__stop_words': [en_stopwords], # [None, en_stopwords],
-		'vect__max_df': [0.3],
-		'vect__min_df': [14], # range(10, 20, 2),
-		# 'vect__binary': [True, False],
-		# 'vect__use_idf': [True, False],
-		# 'vect__smooth_idf': [True, False],
-		'vect__sublinear_tf': [True], # [True, False],
-		# 'vect__ngram_range': [(1, x) for x in range(1, 4)],
-		# 'vect__ngram_range': [(3, x) for x in range(3, 10)],
+	## Keys are parameters of objects in the pipeline.
+	## Values are set of values to try for a particular parameter.
 
-		'knnc__n_neighbors': [7],
-		# 'knnc__weights': ['uniform', 'distance'],
-		# 'knnc__metric': ['minkowski', 'euclidean'],
-		# 'knnc__p': [1, 2]
-		}
+	# switch to first to second and viceversa
+	# toggling alternatively these lines of code
+	# parameters = first_version_params
+	parameters = second_version_params
 
 
 	## Create a Grid-Search-Cross-Validation object
@@ -194,7 +117,6 @@ def main():
 	debug_print()
 
 
-
 	#Let's train the classifier that achieved the best performance,
 	# considering the select scoring-function,
 	# on the entire original TRAINING-Set
@@ -224,14 +146,85 @@ def main():
 	debug_print("Matthews corr. coeff")
 	debug_print(metrics.matthews_corrcoef(Y_test, Y_predicted))
 
-	for x,yt,yp in zip(X_test, Y_test, Y_predicted):
-		if yt!=yp: print(yp, yt, x)
+	return
 
-	vocb = grid_search.best_estimator_.steps[0][1].vocabulary_
-	print("vocabulary len:",len(vocb))
-	for k,v in vocb.items():
-		print(k,v)
+# Set of parameters for the first version of the classifier
+first_version_params = {
+	'vect__analyzer': ['word'],
+	'vect__tokenizer': [stemming_tokenizer],
+	'vect__stop_words': [stopwords.words('english')],
+	'vect__ngram_range': [(1, 1)],
+	'vect__max_df': [0.3],
+	'vect__min_df': [14],
+	'vect__binary': [False],
+	'vect__use_idf': [True],
+	'vect__smooth_idf': [True],
+	'vect__sublinear_tf': [True],
+	'vect__norm': ['l1'],
+	'knnc__n_neighbors': [7],
+	'knnc__weights': ['uniform'],
+	'knnc__p': [2],
 
-# if __name__ == '__main__':
-main()
-system('say Fatto')
+	# Uncomment the following entries in order to perform a full grid seach
+	# with the ranges described in the report.
+	# 'vect__analyzer': ['word', 'char'],
+	# 'vect__tokenizer': [None, stemming_tokenizer, porter_stemming_tokenizer, lancaster_stemming_tokenizer],
+	# 'vect__ngram_range': [(x, y) for x in range(1, 2) for y in range(1, 9) if x <= y],
+	# 'vect__stop_words': [None, stopwords.words('english')],
+	# 'vect__max_df': [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+	# 'vect__min_df': range(1,21),
+	# 'vect__binary': [True, False],
+	# 'vect__use_idf': [True, False],
+	# 'vect__smooth_idf': [True, False],
+	# 'vect__sublinear_tf': [True, False]
+	# 'vect__norm': ['l1', 'l2'],
+	# 'svd__n_components':range(1,11),
+	# 'knnc__n_neighbors': range(3, 10),
+	# 'knnc__weights': ['uniform', 'distance'],
+	# 'knnc__p': [1, 2, 3],
+}
+
+# Set of parameters for the second version of the classifier.
+second_version_params = {
+	'vect__analyzer': ['char'],
+	'vect__tokenizer': [stemming_tokenizer],
+	'vect__stop_words': [stopwords.words('english')],
+	'vect__ngram_range': [(1, 6)],
+	'vect__max_df': [1.0],
+	'vect__min_df': [1],
+	'vect__binary': [False],
+	'vect__use_idf': [True],
+	'vect__smooth_idf': [True],
+	'vect__sublinear_tf': [True],
+	'vect__norm': ['l2'],
+	'svd__n_components':[6],
+	'knnc__n_neighbors': [3],
+	'knnc__weights': ['distance'],
+	'knnc__p': [3],
+
+	# Uncomment the following entries in order to perform a full grid seach
+	# with the ranges described in the report.
+	# 'vect__analyzer': ['word', 'char'],
+	# 'vect__tokenizer': [None, stemming_tokenizer, porter_stemming_tokenizer, lancaster_stemming_tokenizer],
+	# 'vect__ngram_range': [(x, y) for x in range(1, 2) for y in range(1, 9) if x <= y],
+	# 'vect__stop_words': [None, stopwords.words('english')],
+	# 'vect__max_df': [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+	# 'vect__min_df': range(1,21),
+	# 'vect__binary': [True, False],
+	# 'vect__use_idf': [True, False],
+	# 'vect__smooth_idf': [True, False],
+	# 'vect__sublinear_tf': [True, False]
+	# 'vect__norm': ['l1', 'l2'],
+	# 'svd__n_components':range(1,11),
+	# 'knnc__n_neighbors': range(3, 10),
+	# 'knnc__weights': ['uniform', 'distance'],
+	# 'knnc__p': [1, 2, 3],
+}
+
+
+
+
+
+if __name__ == '__main__':
+	main()
+
