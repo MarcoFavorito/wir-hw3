@@ -125,14 +125,3 @@ linearsvc_params = {
 	# 'C': [0.125, 0.5, 0.7, 1.0, 2.0, 4.0, 8.0]
 
 }
-
-# 'fit_intercept':[False],
-# 'intercept_scaling':[1],
-# 'class_weight':[None],
-# 'verbose':[1],
-# 'random_state':[None],
-# 'max_iter':[1000],
-# 'multi_class':['ovr'],
-# 'dual':[True],
-
-# 'penalty':['l2', 'l1'],
