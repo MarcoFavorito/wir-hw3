@@ -61,20 +61,21 @@ def main():
 	# We define the set of model to fit
 	# for each of them, we define a new "Pipeline", i.e. a list of pairs (name, model, params)
 	models = {
-		# 'kNN' : [
-		# 	("vectorizer", vectorizer, gsp.vectorizer_params["kNN"]),
-		# 	("kNN", KNeighborsClassifier(), gsp.kNN_params)
-		# ],
-		# 'LinearSVC': [
-		# 	("vectorizer", vectorizer, gsp.vectorizer_params["LinearSVC"]),
-		# 	("linsvm", svm.LinearSVC(), gsp.linearsvc_params)
-		# 	],
-		#
+		'kNN' : [
+			("vectorizer", vectorizer, gsp.vectorizer_params["kNN"]),
+			("kNN", KNeighborsClassifier(), gsp.kNN_params)
+		],
+
 		'MultinomialNB': [
 			("vectorizer", vectorizer, gsp.vectorizer_params["MultinomialNB"]),
 			("nbc", MultinomialNB(), gsp.mnbc_params)
-		]
+		],
 
+		'LinearSVC': [
+			("vectorizer", vectorizer, gsp.vectorizer_params["LinearSVC"]),
+			# it is set to a low number	in order to have a stable convergence
+			("linsvm", svm.LinearSVC(tol=0.0000001), gsp.linearsvc_params),
+		],
 	}
 
 	# Here we store the final results for each model
