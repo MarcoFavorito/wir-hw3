@@ -1,0 +1,121 @@
+import pprint as pp
+
+from nltk.corpus import stopwords
+from sklearn import metrics
+from sklearn import svm
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.datasets import load_files
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+
+import configurations as conf
+from utils import debug_print
+from utils import stemming_tokenizer
+import grid_search as gs
+import grid_search_parameters as gsp
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import SGDClassifier
+
+def main():
+
+	## Dataset containing Positive and neative sentences on Amazon products
+	dataset_folder = conf.POS_NEG_DATASET_DIR
+	data_folder_training_set = dataset_folder + conf.TRAINING_DIR
+	data_folder_test_set = dataset_folder + conf.TEST_DIR
+
+	training_dataset = load_files(data_folder_training_set)
+	test_dataset = load_files(data_folder_test_set)
+	debug_print()
+	debug_print("----------------------")
+	debug_print(training_dataset.target_names)
+	debug_print("----------------------")
+	debug_print()
+
+	# Load Training-Set
+	X_train, _, Y_train, _ = train_test_split(training_dataset.data,
+											  training_dataset.target,
+											  test_size=0.0)
+	target_names = training_dataset.target_names
+
+	# Load Test-Set
+	_, X_test, _, Y_test = train_test_split(test_dataset.data,
+											test_dataset.target,
+											train_size=0.0)
+
+	target_names = training_dataset.target_names
+	debug_print()
+	debug_print("----------------------")
+	debug_print("Creating Training Set and Test Set")
+	debug_print()
+	debug_print("Training Set Size")
+	debug_print(Y_train.shape)
+	debug_print()
+	debug_print("Test Set Size")
+	debug_print(Y_test.shape)
+	debug_print()
+	debug_print("Classes:")
+	debug_print(target_names)
+	debug_print("----------------------")
+
+	vectorizer = TfidfVectorizer(strip_accents= None, preprocessor = None)
+	vectorizer_params =gsp.tfIdf_params
+
+	models = {
+		# 'kNN' : (KNeighborsClassifier(), gsp.kNN_params),
+		# 'SVC': (svm.SVC(), gsp.svc_params),
+		# 'LinearSVC': (svm.LinearSVC(), gsp.linearsvc_params),
+		'SGDClassifier': (SGDClassifier(), gsp.sgdclassifier_params)
+	}
+
+	model2results = {}
+
+	for model_name, (classifier, classifier_params) in models.items():
+		debug_print("Current model: %s" % model_name)
+		grid_search = gs.hw3_grid_search(vectorizer, vectorizer_params, classifier, classifier_params)
+
+		grid_search.fit(X_train, Y_train)
+		gs.print_grid_search_summary(grid_search)
+		Y_predicted = grid_search.predict(X_test)
+
+		# Evaluate the performance of the classifier on the original Test-Set
+		output_classification_report = metrics.classification_report(
+			Y_test,
+			Y_predicted,
+			target_names=target_names)
+		debug_print()
+		debug_print("----------------------------------------------------")
+		debug_print(output_classification_report)
+		debug_print("----------------------------------------------------")
+		debug_print()
+
+		# Compute the confusion matrix
+		confusion_matrix = metrics.confusion_matrix(Y_test, Y_predicted)
+		debug_print()
+		debug_print("Confusion Matrix: True-Classes X Predicted-Classes")
+		debug_print(confusion_matrix)
+		debug_print()
+
+		debug_print("metrics.accuracy_score")
+		accuracy_score = metrics.accuracy_score(Y_test, Y_predicted)
+		debug_print(accuracy_score)
+
+		debug_print("Matthews corr. coeff")
+		matthews_corrcoef = metrics.matthews_corrcoef(Y_test, Y_predicted)
+		debug_print(matthews_corrcoef)
+		for x,yt,yp in zip(X_test, Y_test, Y_predicted):
+			if yt!=yp: print(yp, yt, x)
+
+		# Here we save the values for the current tested model
+		model2results[model_name] = {
+			"accuracy_score": accuracy_score,
+			"matthews_corrcoef":matthews_corrcoef
+		}
+
+	# print model and results
+	for k,v in model2results.items():
+		print(k + "\n\t" + "\n\t".join([vk+ ":" + str(vv) for vk, vv in v.items()]))
+
+if __name__ == '__main__':
+	main()

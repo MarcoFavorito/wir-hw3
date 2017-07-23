@@ -61,3 +61,641 @@ Tips:
 - dual : bool, (default=True)
     Select the algorithm to either solve the dual or primal optimization problem.
     Prefer dual=False when n_samples > n_features.
+------------------------------------------------------------------
+Big grid searches:
+Classifier: SGD
+Best Parameters:
+{'classifier__alpha': 0.001,
+ 'classifier__epsilon': 0.1,
+ 'classifier__loss': 'hinge',
+ 'classifier__n_iter': 5,
+ 'classifier__penalty': 'l1',
+ 'vectorizer__analyzer': 'word',
+ 'vectorizer__binary': False,
+ 'vectorizer__max_df': 1.0,
+ 'vectorizer__min_df': 2,
+ 'vectorizer__ngram_range': (1, 2),
+ 'vectorizer__norm': 'l2',
+ 'vectorizer__stop_words': ['i',
+                            'me',
+                            'my',
+                            'myself',
+                            'we',
+                            'our'...],
+ 'vectorizer__sublinear_tf': False,
+ 'vectorizer__tokenizer': None}
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[296  12]
+ [ 11 239]]
+
+metrics.accuracy_score
+0.958781362007
+Matthews corr. coeff
+0.916699725857
+
+-----------------------------------------------------------------------------------
+MultinomialNB
+
+Best Parameters:
+{'classifier__alpha': 0.78,
+ 'classifier__fit_prior': False,
+ 'vectorizer__analyzer': 'word',
+ 'vectorizer__binary': False,
+ 'vectorizer__max_df': 0.175,
+ 'vectorizer__min_df': 1,
+ 'vectorizer__ngram_range': (1, 2),
+ 'vectorizer__norm': 'l1',
+ 'vectorizer__stop_words': ['i',
+                            'me',
+                            'my',
+                            'myself',
+                            'we'...],
+ 'vectorizer__sublinear_tf': False,
+ 'vectorizer__tokenizer': None}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+   Positive       0.95      0.98      0.96       308
+   negative       0.97      0.94      0.95       250
+
+avg / total       0.96      0.96      0.96       558
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[301   7]
+ [ 16 234]]
+
+metrics.accuracy_score
+0.958781362007
+Matthews corr. coeff
+0.916869864917
+
+--------------------------------------------------------------------
+{'classifier__C': 1.1,
+ 'vectorizer__analyzer': 'word',
+ 'vectorizer__binary': False,
+ 'vectorizer__max_df': 1.0,
+ 'vectorizer__min_df': 1,
+ 'vectorizer__ngram_range': (1, 2),
+ 'vectorizer__norm': 'l2',
+ 'vectorizer__stop_words': ['i',
+                            'me',
+                            'my'...],
+ 'vectorizer__sublinear_tf': True,
+ 'vectorizer__tokenizer': <function stemming_tokenizer at 0x7faa74cccae8>}
+
+ ----------------------------------------------------------------------------------
+
+'tokenizer':[stemming_tokenizer], # notice: it applies only if analyazer='word'
+'stop_words':[stopwords.words('english')], # Only applies if analyzer == 'word'.
+'ngram_range':ngrams, (1,5)(1,5)
+'max_df':[1.0, 0.9, 0.8, 0.7, 0.6], # is ignored if vocabulary is not None.
+'min_df':range(1,6), # int: absolute count of documents; float: proportion of documents.  is ignored if vocabulary is not None.
+'sublinear_tf':[True] #Apply sublinear tf scaling, i.e. replace tf with 1 + log(tf).
+
+'loss': 'squared_hinge'
+'C' : [0.8,.9,1.0,1.1]
+'tol' : 0.0001
+
+Best Parameters:
+{'classifier__C': 0.8,
+ 'vectorizer__max_df': 1.0,
+ 'vectorizer__min_df': 2,
+ 'vectorizer__ngram_range': (1, 2),
+ 'vectorizer__stop_words': ['i',
+                            'me',
+                            'my',
+                            'myself',
+                            'we',
+                            'our'...],
+ 'vectorizer__sublinear_tf': True,
+ 'vectorizer__tokenizer': <function stemming_tokenizer at 0x7fd581b69ae8>}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+   Positive       0.97      0.99      0.98       308
+   negative       0.98      0.97      0.98       250
+
+avg / total       0.98      0.98      0.98       558
+
+----------------------------------------------------
+LinearSVC
+	accuracy_score:0.978494623656
+	matthews_corrcoef:0.956554655035
+
+-----------------------------------------------------------------------------------------
+Best Parameters:
+{'classifier__C': 1.0,
+ 'vectorizer__max_df': 1.0,
+ 'vectorizer__min_df': 2,
+ 'vectorizer__ngram_range': (1, 2),
+ 'vectorizer__stop_words': ['i',
+                            'me',
+                            'my',
+                            'myself',
+                            'we',
+                            'our',
+                           ...],
+ 'vectorizer__sublinear_tf': True,
+ 'vectorizer__tokenizer': <function stemming_tokenizer at 0x7fab654c1ae8>}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+   Positive       0.97      0.98      0.98       308
+   negative       0.98      0.97      0.97       250
+
+avg / total       0.98      0.98      0.98       558
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[303   5]
+ [  8 242]]
+
+LinearSVC
+	accuracy_score:0.976702508961
+	matthews_corrcoef:0.952899248669
+
+Process finished with exit code 0
+------------------------------------------------------------------------------------------------------
+Best Parameters:
+{'classifier__C': 8,
+ 'classifier__loss': 'hinge',
+ 'classifier__tol': 1,
+ 'vectorizer__max_df': 1.0,
+ 'vectorizer__min_df': 1,
+ 'vectorizer__ngram_range': (1, 2),
+ 'vectorizer__stop_words': ['i',
+                            'me',
+                            'my',
+                            'myself',
+                            'we',
+                            'our',
+                            'ours',
+                            'ourselves',
+                            'you',
+                            'your',
+                            'yours',
+                            'yourself',
+                            'yourselves',
+                            'he',
+                            'him',
+                            'his',
+                            'himself',
+                            'she',
+                            'her',
+                            'hers',
+                            'herself',
+                            'it',
+                            'its',
+                            'itself',
+                            'they',
+                            'them',
+                            'their',
+                            'theirs',
+                            'themselves',
+                            'what',
+                            'which',
+                            'who',
+                            'whom',
+                            'this',
+                            'that',
+                            'these',
+                            'those',
+                            'am',
+                            'is',
+                            'are',
+                            'was',
+                            'were',
+                            'be',
+                            'been',
+                            'being',
+                            'have',
+                            'has',
+                            'had',
+                            'having',
+                            'do',
+                            'does',
+                            'did',
+                            'doing',
+                            'a',
+                            'an',
+                            'the',
+                            'and',
+                            'but',
+                            'if',
+                            'or',
+                            'because',
+                            'as',
+                            'until',
+                            'while',
+                            'of',
+                            'at',
+                            'by',
+                            'for',
+                            'with',
+                            'about',
+                            'against',
+                            'between',
+                            'into',
+                            'through',
+                            'during',
+                            'before',
+                            'after',
+                            'above',
+                            'below',
+                            'to',
+                            'from',
+                            'up',
+                            'down',
+                            'in',
+                            'out',
+                            'on',
+                            'off',
+                            'over',
+                            'under',
+                            'again',
+                            'further',
+                            'then',
+                            'once',
+                            'here',
+                            'there',
+                            'when',
+                            'where',
+                            'why',
+                            'how',
+                            'all',
+                            'any',
+                            'both',
+                            'each',
+                            'few',
+                            'more',
+                            'most',
+                            'other',
+                            'some',
+                            'such',
+                            'no',
+                            'nor',
+                            'not',
+                            'only',
+                            'own',
+                            'same',
+                            'so',
+                            'than',
+                            'too',
+                            'very',
+                            's',
+                            't',
+                            'can',
+                            'will',
+                            'just',
+                            'don',
+                            'should',
+                            'now',
+                            'd',
+                            'll',
+                            'm',
+                            'o',
+                            're',
+                            've',
+                            'y',
+                            'ain',
+                            'aren',
+                            'couldn',
+                            'didn',
+                            'doesn',
+                            'hadn',
+                            'hasn',
+                            'haven',
+                            'isn',
+                            'ma',
+                            'mightn',
+                            'mustn',
+                            'needn',
+                            'shan',
+                            'shouldn',
+                            'wasn',
+                            'weren',
+                            'won',
+                            'wouldn'],
+ 'vectorizer__sublinear_tf': True,
+ 'vectorizer__tokenizer': <function stemming_tokenizer at 0x7ffa1d0ecae8>}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+   Positive       0.96      0.99      0.97       308
+   negative       0.98      0.95      0.97       250
+
+avg / total       0.97      0.97      0.97       558
+
+----------------------------------------------------
+'ngram_range':[(1,2)],
+	'max_df':[1.0], # is ignored if vocabulary is not None.
+	'min_df':range(1,21,1),
+'loss':['squared_hinge', 'hinge'],
+'tol':[10**c for c in range(-5,1,1)],
+'C': [0.01, 0.1, 0.5, 0.8, 1.0, 1.2, 1.5, 2, 4, 8],
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[304   4]
+ [ 12 238]]
+
+metrics.accuracy_score
+0.971326164875
+Matthews corr. coeff
+0.942249112586
+---------------------------------------------------------------------------------------
+
+Best Parameters:
+{'classifier__C': 2,
+ 'classifier__loss': 'squared_hinge',
+ 'classifier__tol': 1,
+ 'vectorizer__max_df': 1.0,
+ 'vectorizer__min_df': 1,
+ 'vectorizer__ngram_range': (1, 1),
+ 'vectorizer__stop_words': ['i',
+                            'me',
+                            'my',
+                            'myself',
+                            'we'...],
+ 'vectorizer__sublinear_tf': True,
+ 'vectorizer__tokenizer': <function stemming_tokenizer at 0x7ff873b90ae8>}
+
+LinearSVC
+	accuracy_score:0.965949820789
+	matthews_corrcoef:0.931420457466
+
+--------------------------------------------------------------------------------------------------
+'loss':['squared_hinge', 'hinge'],
+'tol':[10**c for c in range(-5,1,1)],
+'C': [0.1, 0.5, 0.8, 1.0, 1.2, 1.5, 2, 4, 8],
+Best Parameters:
+{'classifier__C': 1.2,
+ 'classifier__loss': 'squared_hinge',
+ 'classifier__tol': 1e-05,
+ 'vectorizer__max_df': 1.0,
+ 'vectorizer__min_df': 1,
+ 'vectorizer__ngram_range': (1, 1),
+ 'vectorizer__stop_words': ['i',
+                            'me',
+                            'my',
+                            'myself',
+                            'we',
+                            'our'...],
+ 'vectorizer__sublinear_tf': True,
+ 'vectorizer__tokenizer': <function stemming_tokenizer at 0x7f9d56ee0ae8>}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+   Positive       0.96      0.98      0.97       308
+   negative       0.98      0.95      0.97       250
+
+avg / total       0.97      0.97      0.97       558
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[303   5]
+ [ 12 238]]
+LinearSVC
+	matthews_corrcoef:0.93854331122
+	accuracy_score:0.969534050179
+
+------------------------------------------------------------------------------------------------------
+
+Best Parameters:
+{'classifier__C': 2,
+ 'classifier__loss': 'squared_hinge',
+ 'classifier__tol': 1e-05,
+ 'vectorizer__max_df': 1.0,
+ 'vectorizer__min_df': 1,
+ 'vectorizer__ngram_range': (1, 1),
+ 'vectorizer__stop_words': ['i',
+                            'me',
+                            'my',
+                            'myself',
+                            'we',
+                            'our',
+                            'ours',
+                            'ourselves',
+                            'you',
+                            'your',
+                            'yours',
+                            'yourself',
+                            'yourselves',
+                            'he',
+                            'him',
+                            'his',
+                            'himself',
+                            'she',
+                            'her',
+                            'hers',
+                            'herself',
+                            'it',
+                            'its',
+                            'itself',
+                            'they',
+                            'them',
+                            'their',
+                            'theirs',
+                            'themselves',
+                            'what',
+                            'which',
+                            'who',
+                            'whom',
+                            'this',
+                            'that',
+                            'these',
+                            'those',
+                            'am',
+                            'is',
+                            'are',
+                            'was',
+                            'were',
+                            'be',
+                            'been',
+                            'being',
+                            'have',
+                            'has',
+                            'had',
+                            'having',
+                            'do',
+                            'does',
+                            'did',
+                            'doing',
+                            'a',
+                            'an',
+                            'the',
+                            'and',
+                            'but',
+                            'if',
+                            'or',
+                            'because',
+                            'as',
+                            'until',
+                            'while',
+                            'of',
+                            'at',
+                            'by',
+                            'for',
+                            'with',
+                            'about',
+                            'against',
+                            'between',
+                            'into',
+                            'through',
+                            'during',
+                            'before',
+                            'after',
+                            'above',
+                            'below',
+                            'to',
+                            'from',
+                            'up',
+                            'down',
+                            'in',
+                            'out',
+                            'on',
+                            'off',
+                            'over',
+                            'under',
+                            'again',
+                            'further',
+                            'then',
+                            'once',
+                            'here',
+                            'there',
+                            'when',
+                            'where',
+                            'why',
+                            'how',
+                            'all',
+                            'any',
+                            'both',
+                            'each',
+                            'few',
+                            'more',
+                            'most',
+                            'other',
+                            'some',
+                            'such',
+                            'no',
+                            'nor',
+                            'not',
+                            'only',
+                            'own',
+                            'same',
+                            'so',
+                            'than',
+                            'too',
+                            'very',
+                            's',
+                            't',
+                            'can',
+                            'will',
+                            'just',
+                            'don',
+                            'should',
+                            'now',
+                            'd',
+                            'll',
+                            'm',
+                            'o',
+                            're',
+                            've',
+                            'y',
+                            'ain',
+                            'aren',
+                            'couldn',
+                            'didn',
+                            'doesn',
+                            'hadn',
+                            'hasn',
+                            'haven',
+                            'isn',
+                            'ma',
+                            'mightn',
+                            'mustn',
+                            'needn',
+                            'shan',
+                            'shouldn',
+                            'wasn',
+                            'weren',
+                            'won',
+                            'wouldn'],
+ 'vectorizer__sublinear_tf': True,
+ 'vectorizer__tokenizer': <function stemming_tokenizer at 0x7f3bd4625ae8>}
+
+Used Scorer Function:
+make_scorer(matthews_corrcoef)
+
+Number of Folds:
+10
+
+
+----------------------------------------------------
+             precision    recall  f1-score   support
+
+   Positive       0.96      0.98      0.97       308
+   negative       0.98      0.96      0.97       250
+
+avg / total       0.97      0.97      0.97       558
+
+----------------------------------------------------
+
+
+Confusion Matrix: True-Classes X Predicted-Classes
+[[303   5]
+ [ 11 239]]
+
+metrics.accuracy_score
+0.971326164875
+Matthews corr. coeff
+0.942118348157
+----------------------------------------------------------------------------------------

@@ -42,7 +42,7 @@ vectorizer_params = {
 		'tokenizer': [None],
 		'ngram_range': [(1, 2)],
 		'stop_words':[stopwords.words('english')],
-		'max_df': [0.18],
+		'max_df': [0.175],
 		'min_df': [1],
 		'binary': [True],
 		'use_idf': [True],

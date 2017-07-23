@@ -1,0 +1,64 @@
+TfidfVectorizer​ , Pipeline​ , ​ GridSearchCV​ and matthews_corrcoefs​ tools
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+MODEL SELECTION (Part 2)
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+from IIR, cap. 15, introduction
+
+Improving classifier effectiveness has been an area of intensive machine-
+learning research over the last two decades, and this work has led to a new
+generation of state-of-the-art classifiers, such as support vector machines,
+boosted decision trees, regularized logistic regression, neural networks, and
+random forests. Many of these methods, including support vector machines
+(SVMs), the main topic of this chapter, have been applied with success to
+information retrieval problems, particularly text classification. An SVM is a
+kind of large-margin classifier: it is a vector space based machine learning
+method where the goal is to find a decision boundary between two classes
+that is maximally far from any point in the training data (possibly discount-
+ing some points as outliers or noise).
+
+--------------------------------------------------------------------------------------------
+From Quora:
+What are the best machine learning techniques for text classification?
+https://www.quora.com/What-are-the-best-machine-learning-techniques-for-text-classification
+
+https://www.quora.com/Which-is-the-best-approach-for-text-classification
+"""
+As per my searches, I found a paper [1] which compares various approaches of text classification.
+They have experimented with K-NN, decision tree, Naive Bayes, Rocchio’s Algorithm,
+Back-propagation NN and SVM. Eventually, SVM was found to be best performing approach
+in terms of precision, but involved large computation time. They also tried multiple combinations
+
+[1] Pawar, Pratiksha Y., and S. H. Gawande.
+"A comparative study on different types of approaches to text categorization."
+International Journal of Machine Learning and Computing 2.4 (2012): 423-426.
+"""
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+Notes on SVM
+
+scikit-learn.org/stable/modules/svm.html
+Tips:
+- Setting C: C is 1 by default and it’s a reasonable default choice. If you have a lot of noisy observations you should decrease it. It corresponds to regularize more the estimation.
+- Support Vector Machine algorithms are not scale invariant, so it is highly recommended
+    to scale your data. For example, scale each attribute on the input vector X to [0,1] or [-1,+1],
+    or standardize it to have mean 0 and variance 1. Note that the same scaling must be applied
+    to the test vector to obtain meaningful results.
+    See section Preprocessing data for more details on scaling and normalization.
+- The underlying LinearSVC implementation uses a random number generator to select features when fitting the model. It is thus not uncommon, to have slightly different results for the same input data. If that happens, try with a smaller tol parameter.
+- Using L1 penalization as provided by LinearSVC(loss='l2', penalty='l1', dual=False)
+    yields a sparse solution, i.e. only a subset of feature weights is different from zero
+    and contribute to the decision function. Increasing C yields a more complex model
+    (more feature are selected). The C value that yields a “null” model (all weights equal to zero) can be calculated using l1_min_c.
+- dual : bool, (default=True)
+    Select the algorithm to either solve the dual or primal optimization problem.
+    Prefer dual=False when n_samples > n_features.
+
